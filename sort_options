@@ -1,0 +1,52 @@
+add_filter( 'facetwp_sort_options', function( $options, $params ) {
+    $options = array(
+	    'default' => array(
+	        'label' => __( 'Sort by', 'fwp' ),
+	        'query_args' => array()
+	    ),
+	    'title_asc' => array(
+	        'label' => __( 'App Name (A-Z)', 'fwp' ),
+	        'query_args' => array(
+	            'orderby' => 'title',
+	            'order' => 'ASC',
+	        )
+	    ),
+	    'title_desc' => array(
+	        'label' => __( 'App Name (Z-A)', 'fwp' ),
+	        'query_args' => array(
+	            'orderby' => 'title',
+	            'order' => 'DESC',
+	        )
+	    )
+	);
+    $options['user_submitted_app_creation_date'] = array(
+        'label' => 'Date Added',
+        'query_args' => array(
+            'meta_key' => 'user_submitted_app_creation_date',
+            'orderby' => 'meta_value_num',
+            'order' => 'DESC'
+        )
+    );
+	$options['__wpdm_download_count'] = array(
+        'label' => 'Most Popular All Time',
+        'query_args' => array(
+            'orderby' => 'meta_value_num', // sort by numerical custom field
+            'meta_key' => '__wpdm_download_count', // required when sorting by custom fields
+            'order' => 'DESC', // descending order
+        )
+    );
+	$options['__wpdm_download_count_30'] = array(
+        'label' => 'Most Popular Last 30 Days',
+        'query_args' => array(
+            'orderby' => 'meta_value_num', // sort by numerical custom field
+            'meta_key' => '__wpdm_download_count', // required when sorting by custom fields
+            'order' => 'DESC', // descending order
+            'date_query' => array(
+            	array(
+            		'after' => '-1 days',
+            	),
+            ),
+        )
+    );
+    return $options;
+}, 10, 2 );
